@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <link rel="shortcut icon" href="imgs/fav.png">
+    <title>Desviando de Estrelas</title>
+    <style>
+      
+      body{
+         min-height: 100vh;
+         min-width: 100vh;
+      }
+      
+      h1{
+         text-align: center;
+         font-family:'Cinzel', serif;
+         color: #fafeff;
+      }
+
+      body{
+        background-image: url(imgs/estrelas.jpg);
+      }
+      
+      canvas {
+          border: 2px solid #fafeff;
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: auto;
+          margin-bottom: auto;
+          background-image: url(imgs/teladefundo.jpg);
+          background-size: cover;
+          background-repeat: no-repeat;
+          background-position: center;
+          overflow: hidden;
+      } 
+       
+       #chuva{
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+          margin-top: 5px;
+       }
+       
+    </style>
+</head>
+<body>
+   <h1>Atenção: Estrelas Cadentes</h1>
+   <canvas id="estrelas" width="780" height="460"></canvas>
+   <button class="btn btn-warning" id="chuva">Começar</button>
+
+   <script>
+     let = botaoEl = document.querySelector('#chuva');
+     botaoEl.addEventListener('click', function(event){
+
+     });
+     
+   </script>
+
+   <script>
+     class Sprite{
+       constructor(x, y, largura, altura, imagem){
+         this.x = x;
+         this.y = y;
+         this.largura = largura;
+         this.altura = altura;
+         this.imagem = imagem;
+       }
+       desenha(ctx){
+         ctx.drawImage(this.imagem, this.x, this.y, this.largura, this.altura);
+       }
+     }
+
+
+     let canvasEl = document.querySelector('#estrelas');
+     let ctx = canvasEl.getContext('2d');
+     let imagePersonagem =  new Image();
+     imagePersonagem.src = 'imgs/bonequinho.png';
+     let imageEstrela = new Image();
+     imageEstrela.src = 'imgs/estrela.gif';
+     let et = new Sprite(50, 50, 100, 100, imagePersonagem);
+     let estrelas = [];
+     estrelas.push(new Sprite (600, 190, 50, 60, imageEstrela));
+     estrelas.push(new Sprite (640, 150, 50, 60, imageEstrela));
+     estrelas.push(new Sprite (690, 170, 50, 60, imageEstrela));
+
+     imagePersonagem.addEventListener('load', () => {
+      desenhaJogo();
+     });
+
+     canvasEl.addEventListener ('mousemove', (e) => {
+      et.x = e.offsetX;
+      et.y = e.offsetY;
+      desenhaJogo();
+     });
+     
+
+     function desenhaJogo(){
+      ctx.clearRect(0, 0, 780, 460);
+      et.desenha(ctx);
+      for (let estrela of estrelas){
+        estrela.desenha(ctx);
+      }
+      ctx.fillStyle = '#D2691E';
+      ctx.beginPath();
+      ctx.arc(470, 100, 15, 0, grauradianos(360));
+      ctx.fill();
+      ctx.stroke();
+     }
+
+     function grauradianos(graus) {
+        return (Math.PI * graus)/180;
+    }
+   </script>
+</body>
+</html>
